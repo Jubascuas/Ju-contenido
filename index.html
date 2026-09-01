@@ -7,13 +7,11 @@
 <meta name="description" content="Cursos y PDFs sobre diseño gráfico, edición de video y marketing digital, por Ju.contenido.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============ TÍTULOS: High Cruise / Stretch Pro ============
-   Estas son fuentes pagas — no están disponibles en Google Fonts.
-   Subí los archivos .woff2 a tu hosting (o a la carpeta del sitio)
-   y completá las rutas de src abajo. Mientras tanto, los títulos
-   usan Bebas Neue como respaldo automático. */
+   Subí los .woff2/.otf a fonts/ y completá src abajo. Si no cargan,
+   los títulos caen a Unbounded automáticamente. */
 @font-face{
   font-family:'High Cruise';
   src:url('./fonts/HighCruiser.otf') format('opentype');
@@ -26,375 +24,195 @@
   font-weight:400;
   font-display:swap;
 }
-/* ============ TOKENS ============ */
 :root{
-  --bg: #fffaf5;
-  --bg-soft: #fff1e4;
-  --panel: #ffffff;
-  --panel-2: #fff4ea;
-  --line: #ecdccd;
-  --text: #1c1522;
-  --text-dim: #756b81;
-  --text-faint: #ab9fb5;
+  --cream:#fffaf5;
+  --ink:#1C1B1F;
+  --gray:#6b6478;
+  --gray-soft:#a49dae;
 
-  /* brand palette */
-  --pink: #fb5db3;
-  --pink-dim: #ffe1f0;
-  --blue: #07bbff;
-  --blue-dim: #d9f3ff;
-  --teal: #00c49c;
-  --teal-dim: #cff6ec;
-  --purple: #e526fd;
-  --yellow: #ffde59;
+  --pink:#FF5FAE;
+  --pink-dim:#ffe1ef;
+  --blue:#1EC8F2;
+  --blue-dim:#dbf5fd;
+  --teal:#00BC8C;
+  --teal-dim:#d3f5eb;
+  --purple:#D633E0;
+  --yellow:#FFCD3C;
 
-  /* semantic aliases used through the layout */
-  --coral: var(--pink);
-  --coral-dim: var(--pink-dim);
-  --cyan: var(--blue);
-  --cyan-dim: var(--blue-dim);
-  --gold: var(--teal);
-  --gold-dim: var(--teal-dim);
+  --bg:var(--cream);
+  --bg-soft:#fff1e4;
+  --panel:#ffffff;
+  --panel-2:#fff4ea;
+  --text:var(--ink);
+  --text-dim:var(--gray);
+  --text-faint:var(--gray-soft);
+  --line:#ecdccd;
 
-  --radius: 14px;
-  --radius-sm: 8px;
-  --ease: cubic-bezier(.16,.84,.44,1);
+  --coral:var(--pink); --coral-dim:var(--pink-dim);
+  --cyan:var(--blue); --cyan-dim:var(--blue-dim);
+  --gold:var(--teal); --gold-dim:var(--teal-dim);
 
-  --font-display: 'Unbounded', 'High Cruise', 'Stretch Pro', sans-serif;
-  --font-body: 'Poppins', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --radius:20px;
+  --ease:cubic-bezier(.16,.84,.44,1);
+  --font-display:'High Cruise', 'Stretch Pro', 'Unbounded', sans-serif;
+  --font-body:'Poppins', sans-serif;
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-body);
-  font-weight:500;
-  line-height:1.5;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+body{background:var(--bg); color:var(--text); font-family:var(--font-body); overflow-x:hidden;}
+.cursor-glow{
+  position:fixed; top:0; left:0; width:480px; height:480px; margin:-240px 0 0 -240px;
+  border-radius:50%; pointer-events:none; z-index:1; opacity:.32; filter:blur(70px);
+  background:var(--pink); will-change:transform, background;
+  transition:background .4s linear;
 }
-::selection{background:var(--coral); color:#0c0d11;}
-img{max-width:100%; display:block;}
+@media (max-width:760px), (pointer:coarse){.cursor-glow{display:none;}}
+@media (prefers-reduced-motion: reduce){.cursor-glow{display:none;}}
+.nav, .marquee-strip, .hero, .section, footer{position:relative; z-index:2;}
+::selection{background:var(--pink); color:var(--ink);}
 a{color:inherit; text-decoration:none;}
 button{font-family:inherit; cursor:pointer;}
-.mono{font-family:var(--font-mono); letter-spacing:.02em;}
-
-/* film grain overlay — signature texture tying whole site back to video/edit motif */
-.grain{
-  position:fixed; inset:0; z-index:999; pointer-events:none;
-  opacity:.035; mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-}
-
-.wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:-.005em;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+.label{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); font-weight:700;}
+.pop{display:inline-block; font-weight:700; transition:transform .25s var(--ease), color .25s var(--ease);}
+.pop:hover{transform:translateY(-3px) rotate(-2deg); color:var(--pink);}
 
 /* ============ NAV ============ */
-.nav{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:22px 32px;
-  background:linear-gradient(to bottom, rgba(255,250,245,.92), rgba(255,250,245,0));
-  backdrop-filter:blur(2px);
-}
-.logo{
-  font-family:var(--font-display);
-  font-weight:600;
-  font-size:20px; letter-spacing:0;
-  display:flex; align-items:center; gap:8px;
-}
-.logo .dot{width:9px; height:9px; border-radius:50%; background:var(--coral); box-shadow:0 0 10px var(--coral);}
-.nav-links{display:flex; gap:34px; font-size:14px; font-weight:600;}
-.nav-links a{position:relative; color:var(--text-dim); transition:color .25s var(--ease);}
-.nav-links a:hover{color:var(--text);}
-.nav-links a::after{
-  content:''; position:absolute; left:0; bottom:-6px; height:1px; width:0;
-  background:var(--purple); transition:width .25s var(--ease);
-}
+.nav{position:sticky; top:0; z-index:100; background:var(--cream); border-bottom:2px solid var(--ink);}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto;}
+.logo{font-family:var(--font-display); font-weight:800; font-size:21px;}
+.logo span{color:var(--pink);}
+.nav-links{display:flex; gap:28px; font-size:14px; font-weight:600;}
+.nav-links a{position:relative; padding-bottom:4px;}
+.nav-links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:3px; background:var(--blue); transition:width .25s var(--ease);}
 .nav-links a:hover::after{width:100%;}
-.nav-cta{
-  display:flex; align-items:center; gap:16px;
+.nav-cta{display:flex; align-items:center; gap:14px;}
+.btn{font-weight:700; font-size:13.5px; padding:11px 22px; border-radius:100px; border:1.5px solid var(--line); background:var(--cream); color:var(--ink); transition:all .2s var(--ease); white-space:nowrap;}
+.btn:hover{transform:translateY(-2px); border-color:var(--pink);}
+.btn-solid{
+  background:var(--cream); color:var(--ink); border-color:var(--ink);
 }
-.btn{
-  font-weight:700; font-size:13.5px; padding:11px 22px; border-radius:999px;
-  border:1px solid var(--line); background:transparent; color:var(--text);
-  transition:all .25s var(--ease); white-space:nowrap;
-}
-.btn:hover{border-color:var(--text-dim); transform:translateY(-1px);}
-.btn-solid{background:var(--text); color:var(--bg); border-color:var(--text);}
-.btn-solid:hover{background:var(--pink); border-color:var(--pink); color:var(--text);}
+.btn-solid:hover{transform:translateY(-2px); background:var(--ink); color:var(--cream); border-color:var(--ink);}
 .burger{display:none; flex-direction:column; gap:5px; background:none; border:none;}
-.burger span{width:22px; height:2px; background:var(--text);}
+.burger span{width:22px; height:2px; background:var(--ink);}
+
+/* ============ MARQUEE ============ */
+.marquee-strip{background:var(--pink); color:var(--ink); overflow:hidden; white-space:nowrap;}
+.marquee-track{display:inline-flex; animation:scroll 22s linear infinite; font-weight:700; font-size:14px; padding:9px 0;}
+.marquee-track span{padding:0 24px; display:inline-flex; align-items:center; gap:10px;}
+.marquee-track span:nth-child(odd){color:#fff;}
+.marquee-track span:nth-child(even){color:var(--ink);}
+.marquee-track span::before{content:'●'; font-size:7px; color:var(--ink);}
+@keyframes scroll{to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion: reduce){.marquee-track{animation:none;}}
 
 /* ============ HERO ============ */
-.hero{
-  position:relative;
-  min-height:100vh;
-  display:flex; flex-direction:column; justify-content:center;
-  padding:140px 32px 60px;
-  overflow:hidden;
-}
-.hero::before{
-  content:'';
-  position:absolute; top:-20%; right:-10%; width:60%; height:70%;
-  background:radial-gradient(circle, rgba(251,93,179,.22), transparent 65%);
-  filter:blur(10px); pointer-events:none;
-}
-.hero::after{
-  content:'';
-  position:absolute; bottom:-20%; left:-10%; width:55%; height:60%;
-  background:radial-gradient(circle, rgba(7,187,255,.18), transparent 65%);
-  filter:blur(10px); pointer-events:none;
-}
-.hero-inner{max-width:1240px; margin:0 auto; width:100%; position:relative; z-index:2;}
-.eyebrow{
-  display:inline-flex; align-items:center; gap:10px;
-  font-size:12.5px; color:var(--text-dim); margin-bottom:26px;
-  opacity:0; transform:translateY(10px);
-  animation:riseIn .7s var(--ease) .1s forwards;
-}
-.eyebrow .rec{width:7px; height:7px; border-radius:50%; background:var(--coral); animation:pulse 1.6s ease-in-out infinite;}
-h1.hero-title{
-  font-family:var(--font-display);
-  font-size:clamp(34px, 6vw, 76px);
-  line-height:1.05;
-  letter-spacing:-.01em;
-  font-weight:700;
-  max-width:11ch;
-  opacity:0; transform:translateY(24px);
-  animation:riseIn .8s var(--ease) .22s forwards;
-}
-h1.hero-title em{
-  font-style:normal; color:transparent;
-  -webkit-text-stroke:1.5px var(--text);
-}
-.hero-sub{
-  margin-top:26px; max-width:520px; font-size:17px; color:var(--text-dim);
-  opacity:0; transform:translateY(18px);
-  animation:riseIn .8s var(--ease) .36s forwards;
-}
-.hero-ctas{
-  margin-top:38px; display:flex; gap:16px; flex-wrap:wrap;
-  opacity:0; transform:translateY(18px);
-  animation:riseIn .8s var(--ease) .48s forwards;
-}
-.btn-lg{padding:15px 30px; font-size:14.5px;}
+.hero{position:relative; padding:70px 32px 70px;}
+.hero-inner{max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;}
+.hero-note{display:inline-block; margin-bottom:22px; background:var(--yellow); color:var(--ink); font-weight:700; font-size:12px; padding:8px 14px; border-radius:100px; transform:rotate(-2deg); border:2px solid var(--ink);}
+.section-divider{position:relative; height:0; text-align:center; z-index:6;}
+.section-divider .hero-note{position:absolute; top:0; left:50%; transform:translate(-50%,-50%) rotate(-2deg); margin-bottom:0; white-space:nowrap;}
+.eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); font-weight:700; margin-bottom:22px;}
+.eyebrow .rec{width:7px; height:7px; border-radius:50%; background:var(--pink); animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+h1.hero-title{font-size:clamp(40px, 6.5vw, 84px); line-height:1.02; max-width:16ch;}
+h1.hero-title .accent{color:var(--pink);}
+.hero-sub{margin-top:24px; max-width:560px; font-size:17px; color:var(--gray); line-height:1.6;}
+.hero-ctas{margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
+.btn-lg{padding:15px 30px; font-size:14.5px; border-width:2px;}
+.btn-glow{animation:glowpulse 1.8s ease-in-out infinite;}
+@keyframes glowpulse{0%,100%{box-shadow:0 0 0 0 rgba(30,200,242,.45);}50%{box-shadow:0 0 0 9px rgba(30,200,242,0);}}
 
-@keyframes riseIn{to{opacity:1; transform:translateY(0);}}
-@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
+/* timeline panel */
 
-/* signature element — timeline de programa de edición, con pistas por categoría */
-.tl-panel{
-  margin-top:76px;
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  background:var(--panel);
-  padding:24px 24px 20px;
-  opacity:0; transform:translateY(20px);
-  animation:riseIn .8s var(--ease) .6s forwards;
-}
-.tl-caption{font-size:12px; color:var(--text-faint); margin-bottom:20px;}
-.tl-ruler{position:relative; height:1px; background:var(--line); margin-bottom:20px;}
-.tl-ruler .tl-tick{position:absolute; top:-4px; width:1px; height:8px; background:var(--line);}
-.tl-playhead{
-  position:absolute; top:-7px; width:1px; height:15px; background:var(--text); left:0%;
-  animation:tlMove 8s linear .6s forwards;
-}
-.tl-playhead::before{
-  content:''; position:absolute; top:-4px; left:-3.5px; width:8px; height:8px;
-  background:var(--text); clip-path:polygon(50% 100%, 0 0, 100% 0);
-}
-@keyframes tlMove{to{left:100%;}}
-.tl-tracks{display:flex; flex-direction:column; gap:10px;}
-.tl-track{display:grid; grid-template-columns:118px 1fr; align-items:center; gap:14px;}
-.tl-tag{font-size:11px; color:var(--text-faint); text-align:right;}
-.tl-bar{position:relative; height:28px; border-radius:6px; background:var(--bg-soft); overflow:hidden; border:1px solid var(--line);}
-.tl-fill{
-  position:absolute; inset:0; width:0%; border-radius:6px;
-  display:flex; align-items:center; padding-left:12px;
-  font-size:11.5px; font-weight:700; letter-spacing:.03em;
-  animation-timing-function:var(--ease); animation-fill-mode:forwards;
-}
-.tl-fill.diseno{background:linear-gradient(90deg, var(--pink-dim), var(--pink)); color:#3a0e28; animation-name:tlFillW; animation-duration:2.6s; animation-delay:.6s;}
-.tl-fill.video{background:linear-gradient(90deg, var(--blue-dim), var(--blue)); color:#012a3a; animation-name:tlFillW; animation-duration:2.6s; animation-delay:3.1s;}
-.tl-fill.marketing{background:linear-gradient(90deg, var(--teal-dim), var(--teal)); color:#012e24; animation-name:tlFillW; animation-duration:2.8s; animation-delay:5.6s;}
-@keyframes tlFillW{to{width:100%;}}
+/* ============ SECTIONS ============ */
+.section{padding:100px 32px;}
+.section-head{margin-bottom:48px;}
+.section-title{font-size:clamp(32px, 4.5vw, 52px); margin-top:8px;}
+.section-desc{max-width:560px; color:var(--gray); font-size:16px; margin-top:10px;}
 
-@media (prefers-reduced-motion: reduce){
-  .tl-playhead{animation:none; left:100%;}
-  .tl-fill{animation:none; width:100%;}
-}
-
-/* ============ SECTION SHELL ============ */
-.section{padding:120px 32px;}
-.section-head{
-  display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:52px;
-  opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);
-}
-.section.in-view .section-head{opacity:1; transform:translateY(0);}
-.track-label{
-  font-size:12px; color:var(--track-color, var(--coral));
-  display:flex; align-items:center; gap:10px;
-}
-.track-label::before{content:''; width:22px; height:1px; background:var(--track-color, var(--coral));}
-.section-title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(28px, 4vw, 52px); letter-spacing:-.005em;
-  display:flex; align-items:baseline; gap:18px; flex-wrap:wrap;
-}
-.section-desc{max-width:560px; color:var(--text-dim); font-size:16px;}
-
-/* ============ CARD ROWS ============ */
-.row-scroll{
-  display:flex; gap:20px; overflow-x:auto; padding:6px 6px 26px;
-  scroll-snap-type:x proximity; cursor:grab;
-  scrollbar-width:none;
-}
+/* ============ CARDS ============ */
+.row-scroll{display:flex; gap:22px; overflow-x:auto; padding:8px 8px 26px; scroll-snap-type:x proximity; cursor:grab; scrollbar-width:none;}
 .row-scroll::-webkit-scrollbar{display:none;}
 .row-scroll.dragging{cursor:grabbing; scroll-snap-type:none;}
-.card{
-  flex:0 0 300px; scroll-snap-align:start;
-  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-  overflow:hidden;
-  opacity:0; transform:translateY(30px);
-  transition:opacity .6s var(--ease), transform .6s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
-}
-.section.in-view .card{opacity:1; transform:translateY(0);}
-.card:nth-child(1){transition-delay:.05s;}
-.card:nth-child(2){transition-delay:.12s;}
-.card:nth-child(3){transition-delay:.19s;}
-.card:nth-child(4){transition-delay:.26s;}
-.card:hover{border-color:var(--track-color); box-shadow:0 18px 40px -20px var(--track-color);}
+.card{flex:0 0 300px; scroll-snap-align:start; background:var(--panel); border:1.5px solid var(--track-color, var(--pink)); border-radius:var(--radius); overflow:hidden; transition:transform .3s var(--ease), box-shadow .3s var(--ease);}
+.card:hover{transform:translateY(-6px); box-shadow:0 22px 46px -18px var(--track-color, var(--pink));}
 .card-thumb{
-  position:relative; height:170px;
+  position:relative; height:170px; display:flex; align-items:center; justify-content:center;
   background:
-    repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 14px),
-    linear-gradient(160deg, var(--track-color) 0%, var(--bg-soft) 130%);
-  display:flex; align-items:center; justify-content:center;
+    repeating-linear-gradient(135deg, rgba(255,255,255,.35) 0 2px, transparent 2px 14px),
+    linear-gradient(165deg, var(--track-color) 0%, var(--panel-2) 135%);
 }
-.card-thumb svg{width:46px; height:46px; opacity:.92;}
-.card-format{
-  position:absolute; top:12px; left:12px;
-  font-family:var(--font-mono); font-size:10.5px; padding:4px 9px;
-  background:rgba(12,13,17,.72); border:1px solid rgba(255,255,255,.14);
-  border-radius:999px; color:var(--text);
-}
+.card-thumb svg{width:46px; height:46px; opacity:.9;}
+.card-format{display:inline-block; margin-bottom:10px; font-weight:700; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; padding:5px 12px; background:var(--gray); color:var(--cream); border-radius:100px;}
 .card-body{padding:18px 20px 22px;}
-.card-title{font-size:16px; font-weight:700; margin-bottom:8px; line-height:1.3;}
-.card-desc{font-size:13.5px; color:var(--text-dim); margin-bottom:18px; line-height:1.5; min-height:40px;}
+.card-title{font-family:var(--font-display); font-size:16px; font-weight:700; margin-bottom:8px; line-height:1.3;}
+.card-desc{font-size:13.5px; color:var(--gray); margin-bottom:18px; line-height:1.5; min-height:40px;}
 .card-foot{display:flex; align-items:center; justify-content:space-between;}
 .price{display:flex; align-items:baseline; gap:8px;}
 .price .now{font-weight:800; font-size:16.5px;}
 .price .before{font-size:12.5px; color:var(--text-faint); text-decoration:line-through;}
-.price .free{font-weight:800; font-size:14.5px; color:var(--track-color);}
-.card-btn{
-  width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  transition:all .25s var(--ease);
-}
-.card:hover .card-btn{background:var(--track-color); border-color:var(--track-color);}
-.card-btn svg{width:14px; height:14px; stroke:var(--text);}
-.card:hover .card-btn svg{stroke:#0c0d11;}
+.card-btn{width:36px; height:36px; border-radius:50%; border:none; background:var(--track-color, var(--pink)); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s var(--ease);}
+.card:hover .card-btn{transform:scale(1.08);}
+.card-btn svg{width:14px; height:14px; stroke:var(--ink);}
 
 /* ============ FREEBIES ============ */
-.freebies{background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.freebies{background:var(--ink); color:var(--cream);}
+.freebies .section-desc{color:var(--gray-soft);}
 .free-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
-.free-card{
-  border:1px dashed var(--line); border-radius:var(--radius); padding:26px;
-  display:flex; flex-direction:column; gap:14px;
-  transition:border-color .3s var(--ease), transform .3s var(--ease);
-  opacity:0; transform:translateY(20px); transition-property:opacity, transform, border-color;
-}
-.section.in-view .free-card{opacity:1; transform:translateY(0);}
-.free-card:hover{border-color:var(--text-dim); transform:translateY(-3px);}
-.free-tag{
-  align-self:flex-start; font-family:var(--font-mono); font-size:10.5px;
-  padding:4px 10px; border-radius:999px; background:rgba(255,222,89,.35); color:#7a5e00;
-}
-.free-title{font-size:17px; font-weight:700;}
-.free-desc{font-size:13.5px; color:var(--text-dim); flex:1;}
-.free-link{font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; color:var(--text);}
+.free-card{border:2px dashed rgba(251,244,232,.35); border-radius:var(--radius); padding:26px; display:flex; flex-direction:column; gap:14px; transition:border-color .25s var(--ease), transform .25s var(--ease);}
+.free-card:hover{border-color:var(--yellow); transform:translateY(-4px) rotate(-.6deg);}
+.free-tag{align-self:flex-start; font-size:10.5px; font-weight:700; padding:5px 12px; border-radius:100px; background:var(--yellow); color:var(--ink);}
+.free-title{font-family:var(--font-display); font-size:17px; font-weight:700;}
+.free-desc{font-size:13.5px; color:var(--gray-soft); flex:1;}
+.free-link{font-size:13px; font-weight:700; text-decoration:underline; text-underline-offset:3px; color:var(--cream);}
 
 /* ============ SOBRE MÍ ============ */
 .about-copy{max-width:720px;}
-.about-copy p{font-size:16px; color:var(--text-dim); margin-bottom:18px; max-width:62ch;}
-.about-copy p strong{color:var(--text); font-weight:700;}
-.about-contact{
-  margin-top:32px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;
-}
-.mail-link{
-  display:flex; align-items:center; gap:9px; font-size:14px; font-weight:700;
-  padding:11px 20px; border-radius:999px; border:1px solid var(--line);
-  transition:all .25s var(--ease);
-}
-.mail-link svg{width:16px; height:16px; stroke:var(--text); flex-shrink:0;}
-.mail-link:hover{border-color:var(--purple); background:var(--purple); color:var(--text);}
+.about-copy p{font-size:17px; color:var(--gray); margin-bottom:18px; max-width:64ch; line-height:1.7;}
+.about-copy p b{color:var(--ink); font-weight:800;}
+.about-contact{margin-top:32px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+.mail-link{display:flex; align-items:center; gap:9px; font-size:14px; font-weight:700; padding:11px 20px; border-radius:100px; border:1.5px solid var(--line); transition:all .2s var(--ease);}
+.mail-link svg{width:16px; height:16px; stroke:var(--ink); flex-shrink:0;}
+.mail-link:hover{background:var(--purple); border-color:var(--purple); color:#fff;}
+.mail-link:hover svg{stroke:#fff;}
+.socials{display:flex; gap:12px;}
+.socials a{width:40px; height:40px; border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; transition:all .2s var(--ease);}
+.socials a:hover{background:var(--pink); border-color:var(--pink); transform:rotate(-8deg);}
+.socials svg{width:16px; height:16px; stroke:var(--ink);}
 
 /* ============ FAQ ============ */
-.faq{background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-.faq-list{display:flex; flex-direction:column; gap:12px; max-width:800px;}
-.faq-item{
-  border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--panel);
-  overflow:hidden;
-  opacity:0; transform:translateY(16px); transition:opacity .5s var(--ease), transform .5s var(--ease), border-color .25s var(--ease);
-}
-.section.in-view .faq-item{opacity:1; transform:translateY(0);}
-.faq-item:hover{border-color:var(--text-faint);}
-.faq-item[open]{border-color:var(--purple);}
-.faq-item summary{
-  list-style:none; cursor:pointer; padding:20px 24px;
-  display:flex; align-items:center; justify-content:space-between; gap:16px;
-  font-size:15.5px; font-weight:700;
-}
+.faq{background:var(--bg-soft);}
+.faq-list{display:flex; flex-direction:column; gap:14px; max-width:800px;}
+.faq-item{border:2.5px solid var(--ink); border-radius:16px; background:var(--panel); overflow:hidden; transition:transform .2s var(--ease);}
+.faq-item[open]{transform:translateX(4px);}
+.faq-item summary{list-style:none; cursor:pointer; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:15.5px; font-weight:700;}
 .faq-item summary::-webkit-details-marker{display:none;}
-.faq-item summary .plus{
-  flex-shrink:0; width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center; position:relative; transition:transform .3s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
-}
-.faq-item summary .plus::before, .faq-item summary .plus::after{
-  content:''; position:absolute; background:var(--text); transition:opacity .2s var(--ease);
-}
-.faq-item summary .plus::before{width:10px; height:1.5px;}
-.faq-item summary .plus::after{width:1.5px; height:10px;}
-.faq-item[open] summary .plus{background:var(--purple); border-color:var(--purple); transform:rotate(180deg);}
-.faq-item[open] summary .plus::before, .faq-item[open] summary .plus::after{background:var(--text);}
+.faq-item summary .plus{flex-shrink:0; width:28px; height:28px; border-radius:50%; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; position:relative; transition:transform .3s var(--ease), background .3s var(--ease);}
+.faq-item summary .plus::before, .faq-item summary .plus::after{content:''; position:absolute; background:var(--ink);}
+.faq-item summary .plus::before{width:10px; height:2px;}
+.faq-item summary .plus::after{width:2px; height:10px;}
+.faq-item[open] summary .plus{background:var(--yellow); transform:rotate(180deg);}
 .faq-item[open] summary .plus::after{opacity:0;}
-.faq-answer{padding:0 24px 22px; font-size:14.5px; color:var(--text-dim); max-width:64ch; line-height:1.6;}
+.faq-answer{padding:0 24px 22px; font-size:14.5px; color:var(--gray); max-width:64ch; line-height:1.6;}
 
 /* ============ FOOTER ============ */
-footer{padding:90px 32px 40px;}
-.foot-top{
-  display:grid; grid-template-columns:1.3fr 1fr; gap:60px; padding-bottom:60px;
-  border-bottom:1px solid var(--line);
-}
-.foot-title{font-family:var(--font-display); font-size:clamp(24px,3.4vw,38px); font-weight:700; letter-spacing:-.005em; max-width:12ch; margin-bottom:20px;}
-.newsletter{display:flex; gap:0; max-width:420px; border:1px solid var(--line); border-radius:999px; padding:5px 5px 5px 20px;}
-.newsletter input{
-  flex:1; background:none; border:none; outline:none; color:var(--text); font-family:var(--font-body); font-size:14px;
-}
-.newsletter input::placeholder{color:var(--text-faint);}
-.newsletter button{
-  border-radius:999px; border:none; background:var(--text); color:var(--bg); font-weight:700;
-  padding:10px 20px; font-size:13px; transition:background .25s var(--ease);
-}
-.newsletter button:hover{background:var(--pink); color:var(--text);}
+footer{padding:90px 32px 40px; border-top:2px solid var(--ink);}
+.foot-top{display:grid; grid-template-columns:1.3fr 1fr; gap:60px; padding-bottom:60px; border-bottom:2px solid var(--ink);}
+.foot-title{font-size:clamp(34px,5vw,54px); color:var(--pink); line-height:.98; margin-bottom:20px;}
+.newsletter{display:flex; gap:0; max-width:420px; border:2.5px solid var(--ink); border-radius:100px; padding:5px 5px 5px 20px;}
+.newsletter input{flex:1; background:none; border:none; outline:none; color:var(--ink); font-family:var(--font-body); font-size:14px;}
+.newsletter input::placeholder{color:var(--gray-soft);}
+.newsletter button{border-radius:100px; border:none; background:var(--ink); color:var(--cream); font-weight:700; padding:10px 20px; font-size:13px; transition:background .2s var(--ease);}
+.newsletter button:hover{background:var(--pink); color:var(--ink);}
 .foot-cols{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
-.foot-col h4{font-size:12px; color:var(--text-faint); margin-bottom:16px; letter-spacing:.04em;}
-.foot-col a{display:block; font-size:14px; color:var(--text-dim); margin-bottom:11px; transition:color .2s;}
-.foot-col a:hover{color:var(--text);}
-.foot-bottom{
-  display:flex; justify-content:space-between; align-items:center; padding-top:28px; flex-wrap:wrap; gap:14px;
-}
-.foot-bottom p{font-size:12.5px; color:var(--text-faint);}
-.socials{display:flex; gap:14px;}
-.socials a{
-  width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center; transition:all .25s var(--ease);
-}
-.socials a:hover{border-color:var(--coral); background:var(--coral); }
-.socials svg{width:15px; height:15px; stroke:var(--text);}
-.socials a:hover svg{stroke:#0c0d11;}
+.foot-col h4{font-weight:800; color:var(--blue); font-size:13px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px;}
+.foot-col a{display:block; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:11px; text-decoration:underline; text-underline-offset:3px; text-decoration-color:transparent; transition:text-decoration-color .2s var(--ease);}
+.foot-col a:hover{text-decoration-color:var(--ink);}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:28px; flex-wrap:wrap; gap:14px;}
+.foot-bottom p{font-size:12.5px; color:var(--gray);}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:860px){
@@ -405,134 +223,108 @@ footer{padding:90px 32px 40px;}
   .foot-cols{grid-template-columns:1fr 1fr;}
 }
 @media (max-width:520px){
-  .section{padding:80px 20px;}
-  .hero{padding:120px 20px 40px;}
+  .section{padding:70px 20px;}
+  .hero{padding:100px 20px 40px;}
   .card{flex:0 0 250px;}
 }
-
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
-}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}}
 </style>
 </head>
 <body>
 
-<div class="grain"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
 
-<!-- NAV -->
-<header class="nav">
-  <a href="#" class="logo"><span class="dot"></span>Ju.contenido</a>
-  <nav class="nav-links">
-    <a href="#diseno">Diseño</a>
-    <a href="#video">Video</a>
-    <a href="#marketing">Marketing</a>
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#gratis">Gratis</a>
-  </nav>
-  <div class="nav-cta">
-    <a href="#" class="btn">Ingresar</a>
-    <a href="#diseno" class="btn btn-solid">Recursos premium</a>
-    <button class="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Ju.<span>contenido</span></a>
+    <div class="nav-links">
+      <a href="#diseno">Diseño</a>
+      <a href="#video">Video</a>
+      <a href="#marketing">Marketing</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#gratis">Gratis</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="btn">Ingresar</a>
+      <a href="#diseno" class="btn btn-solid btn-glow">Recursos premium</a>
+      <button class="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
   </div>
-</header>
+</nav>
 
-<!-- HERO -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Diseño</span><span>Video</span><span>Marketing</span><span>Recursos gratuitos</span>
+    <span>Diseño</span><span>Video</span><span>Marketing</span><span>Recursos gratuitos</span>
+  </div>
+</div>
+
 <section class="hero">
   <div class="hero-inner">
-    <span class="eyebrow mono"><span class="rec"></span>GRABANDO — recursos para crear todos los días</span>
-    <h1 class="hero-title">Diseñá, editá<br>y contá tu <em>historia</em></h1>
+    <span class="eyebrow"><span class="rec"></span>Grabando — recursos para crear todos los días</span>
+    <h1 class="hero-title">Diseñá, editá<br>y contá tu <span class="accent">historia</span></h1>
     <p class="hero-sub">Soy Ju, diseñadora gráfica y creadora de contenido. Lo que vas a encontrar acá lo armé con lo que uso en mi trabajo real, todos los días — no es teoría suelta, es lo que a mí me sirvió para crecer.</p>
     <div class="hero-ctas">
-      <a href="#diseno" class="btn btn-solid btn-lg">Recursos premium</a>
-      <a href="#gratis" class="btn btn-lg">Recursos gratuitos</a>
-    </div>
-
-    <div class="tl-panel">
-      <div class="tl-caption mono">Así se conecta cada proyecto: diseño, edición y estrategia</div>
-      <div class="tl-ruler">
-        <div class="tl-tick" style="left:0%"></div>
-        <div class="tl-tick" style="left:12.5%"></div>
-        <div class="tl-tick" style="left:25%"></div>
-        <div class="tl-tick" style="left:37.5%"></div>
-        <div class="tl-tick" style="left:50%"></div>
-        <div class="tl-tick" style="left:62.5%"></div>
-        <div class="tl-tick" style="left:75%"></div>
-        <div class="tl-tick" style="left:87.5%"></div>
-        <div class="tl-tick" style="left:100%"></div>
-        <div class="tl-playhead"></div>
-      </div>
-      <div class="tl-tracks">
-        <div class="tl-track">
-          <span class="tl-tag mono">PISTA 01 · DISEÑO</span>
-          <div class="tl-bar"><div class="tl-fill diseno">DISEÑO</div></div>
-        </div>
-        <div class="tl-track">
-          <span class="tl-tag mono">PISTA 02 · VIDEO</span>
-          <div class="tl-bar"><div class="tl-fill video">EDICIÓN</div></div>
-        </div>
-        <div class="tl-track">
-          <span class="tl-tag mono">PISTA 03 · MARKETING</span>
-          <div class="tl-bar"><div class="tl-fill marketing">MARKETING</div></div>
-        </div>
-      </div>
+      <a href="#diseno" class="btn btn-solid btn-lg btn-glow">Recursos premium</a>
+      <a href="#gratis" class="btn btn-lg btn-glow">Recursos gratuitos</a>
     </div>
   </div>
 </section>
 
-<!-- TRACK: DISEÑO -->
-<section class="section" id="diseno" style="--track-color:var(--coral)">
+<!-- DISEÑO -->
+<section class="section" id="diseno" style="--track-color:var(--pink)">
   <div class="wrap">
     <div class="section-head">
-      <span class="track-label mono">PISTA — V1</span>
+      <span class="label">Pista — V1</span>
       <h2 class="section-title">Diseño</h2>
       <p class="section-desc">Diseño gráfico y multimedial de verdad: piezas para redes, branding e identidad visual. Nada de UX/UI — esto es lo que uso yo en mi día a día.</p>
     </div>
     <div class="row-scroll" data-row>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M12 3l1.8 4.4L18 9l-4.2 1.6L12 15l-1.8-4.4L6 9l4.2-1.6L12 3z"/><path d="M5 19l1-2.4L8.4 15 6 14 5 11.6 4 14l-2.4 1 2.4 1L5 19z"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M12 3l1.8 4.4L18 9l-4.2 1.6L12 15l-1.8-4.4L6 9l4.2-1.6L12 3z"/><path d="M5 19l1-2.4L8.4 15 6 14 5 11.6 4 14l-2.4 1 2.4 1L5 19z"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Diseño gráfico: de cero a tu primera pieza profesional</h3>
           <p class="card-desc">Fundamentos, composición, color y tipografía aplicados a proyectos reales, no a la teoría sola.</p>
           <div class="card-foot">
             <div class="price"><span class="before">$95.000</span><span class="now">$69.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para dise-o-gr-fico-de-cero-a-tu-primera-pieza-profesional" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para diseño-gráfico-de-cero"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Illustrator + Photoshop: mi flujo de trabajo real</h3>
           <p class="card-desc">Cómo paso una idea de boceto a pieza terminada, con los mismos atajos y capas que uso yo.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$34.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para illustrator-photoshop-mi-flujo-de-trabajo-real" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para illustrator-photoshop"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M4 20l6-14 3 7 3-4 4 11"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M4 20l6-14 3 7 3-4 4 11"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">PDF</span>
+          <span class="card-format">PDF</span>
           <h3 class="card-title">Guía de tipografía aplicada</h3>
           <p class="card-desc">Cómo elegir y combinar fuentes sin depender del ojo de otra persona.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$6.500</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para gu-a-de-tipograf-a-aplicada" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para guia-tipografia"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">TEMPLATES</span>
+          <span class="card-format">TEMPLATES</span>
           <h3 class="card-title">Pack de templates Canva Pro</h3>
           <p class="card-desc">40 plantillas editables para redes, presentaciones y portfolio.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$8.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para pack-de-templates-canva-pro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para templates-canva"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
@@ -540,60 +332,60 @@ footer{padding:90px 32px 40px;}
   </div>
 </section>
 
-<!-- TRACK: VIDEO -->
-<section class="section" id="video" style="--track-color:var(--cyan)">
+<!-- VIDEO -->
+<section class="section" id="video" style="--track-color:var(--blue)">
   <div class="wrap">
     <div class="section-head">
-      <span class="track-label mono">PISTA — V2</span>
+      <span class="label">Pista — V2</span>
       <h2 class="section-title">Edición de video</h2>
       <p class="section-desc">De la toma cruda al corte final. Premiere, CapCut, color y ritmo para reels que se ven profesionales.</p>
     </div>
     <div class="row-scroll" data-row>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><rect x="3" y="6" width="13" height="12" rx="1.5"/><path d="M16 10l5-3v10l-5-3"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><rect x="3" y="6" width="13" height="12" rx="1.5"/><path d="M16 10l5-3v10l-5-3"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Edición cinematográfica con Premiere</h3>
           <p class="card-desc">Ritmo, cortes y estructura narrativa aplicados a proyectos reales.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$32.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para edici-n-cinematogr-fica-con-premiere" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para edicion-premiere"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><rect x="7" y="2" width="10" height="18" rx="5"/><path d="M4 11a8 8 0 0016 0M12 19v3"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><rect x="7" y="2" width="10" height="18" rx="5"/><path d="M4 11a8 8 0 0016 0M12 19v3"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Reels que enganchan</h3>
           <p class="card-desc">Ganchos, ritmo de corte y estructura para los primeros 3 segundos.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$18.500</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para reels-que-enganchan" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para reels-enganchan"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">PDF</span>
+          <span class="card-format">PDF</span>
           <h3 class="card-title">Guía de color grading</h3>
           <p class="card-desc">Curvas, LUTs y un flujo de trabajo simple para dar look profesional.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$5.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para gu-a-de-color-grading" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para color-grading"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M4 7l16 10M4 17l16-10"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M4 7l16 10M4 17l16-10"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">PACK</span>
+          <span class="card-format">PACK</span>
           <h3 class="card-title">Transiciones + presets</h3>
           <p class="card-desc">60 transiciones y 20 presets de color listos para arrastrar y soltar.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$9.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para transiciones-presets" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para transiciones-presets"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
@@ -601,60 +393,60 @@ footer{padding:90px 32px 40px;}
   </div>
 </section>
 
-<!-- TRACK: MARKETING -->
-<section class="section" id="marketing" style="--track-color:var(--gold)">
+<!-- MARKETING -->
+<section class="section" id="marketing" style="--track-color:var(--teal)">
   <div class="wrap">
     <div class="section-head">
-      <span class="track-label mono">PISTA — A1</span>
+      <span class="label">Pista — A1</span>
       <h2 class="section-title">Marketing</h2>
       <p class="section-desc">La voz detrás de cada pieza. Estrategia, contenido y copy que convierte visitas en clientes.</p>
     </div>
     <div class="row-scroll" data-row>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M3 11v2a2 2 0 002 2h1l4 4V5l-4 4H5a2 2 0 00-2 2z"/><path d="M16 8a5 5 0 010 8"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M3 11v2a2 2 0 002 2h1l4 4V5l-4 4H5a2 2 0 00-2 2z"/><path d="M16 8a5 5 0 010 8"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Estrategia de contenido 360°</h3>
           <p class="card-desc">Un sistema completo para planificar, crear y medir sin improvisar.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$28.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para estrategia-de-contenido-360" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para estrategia-360"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M4 4l16 8-16 8 4-8-4-8z"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M4 4l16 8-16 8 4-8-4-8z"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">PDF</span>
+          <span class="card-format">PDF</span>
           <h3 class="card-title">Copywriting que vende</h3>
           <p class="card-desc">Estructuras probadas para escribir textos que llevan a la acción.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$7.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para copywriting-que-vende" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para copywriting"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">CURSO</span>
+          <span class="card-format">CURSO</span>
           <h3 class="card-title">Plan de redes en 30 días</h3>
           <p class="card-desc">Un calendario paso a paso para ordenar tus redes en un mes.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$15.000</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para plan-de-redes-en-30-d-as" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para plan-redes-30-dias"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
       <article class="card">
-        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0d11" stroke-width="1.6"><path d="M4 19V9M10 19V5M16 19v-7M20 19v-3"/></svg></div>
+        <div class="card-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1B1F" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M20 19v-3"/></svg></div>
         <div class="card-body">
-          <span class="card-format mono" style="position:static; display:inline-block; margin-bottom:10px;">PDF</span>
+          <span class="card-format">PDF</span>
           <h3 class="card-title">Calendario editorial 2026</h3>
           <p class="card-desc">Fechas clave, tendencias y espacio para planificar cada mes.</p>
           <div class="card-foot">
             <div class="price"><span class="now">$4.500</span></div>
-            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para calendario-editorial-2026" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#" class="card-btn" data-mp-link="TODO: pegar link de Mercado Pago para calendario-editorial"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </article>
@@ -662,47 +454,51 @@ footer{padding:90px 32px 40px;}
   </div>
 </section>
 
+<div class="section-divider">
+  <span class="hero-note">recursos nuevos cada mes ✦</span>
+</div>
+
 <!-- FREEBIES -->
 <section class="section freebies" id="gratis">
   <div class="wrap">
     <div class="section-head">
-      <span class="track-label mono" style="--track-color:var(--cyan)">EXPORTAR — GRATIS</span>
+      <span class="label" style="color:var(--yellow)">Exportar — Gratis</span>
       <h2 class="section-title">Para empezar hoy, sin pagar nada</h2>
       <p class="section-desc">Tres recursos que podés descargar ahora mismo.</p>
     </div>
     <div class="free-grid">
       <div class="free-card">
-        <span class="free-tag mono">GRATIS · PDF</span>
+        <span class="free-tag">GRATIS · PDF</span>
         <h3 class="free-title">Lo básico del diseño gráfico</h3>
         <p class="free-desc">Los conceptos que tenés que tener claros antes de armar cualquier pieza: jerarquía visual, contraste, espacio en blanco, grillas, y cómo elegir color y tipografía sin perderte en la teoría.</p>
-        <a href="#" class="free-link" data-pdf-link="TODO: subir lo-basico-del-diseno-grafico.pdf al repo de GitHub y pegar la ruta acá">Descargar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="#" class="free-link" data-pdf-link="TODO: subir lo-basico-del-diseno-grafico.pdf al repo de GitHub y pegar la ruta acá">Descargar →</a>
       </div>
       <div class="free-card">
-        <span class="free-tag mono">GRATIS · PDF</span>
+        <span class="free-tag">GRATIS · PDF</span>
         <h3 class="free-title">10 hooks para reels</h3>
         <p class="free-desc">Frases de apertura que funcionan, listas para adaptar a tu marca.</p>
-        <a href="#" class="free-link" data-pdf-link="TODO: subir 10-hooks-para-reels.pdf al repo de GitHub y pegar la ruta acá">Descargar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="#" class="free-link" data-pdf-link="TODO: subir 10-hooks-para-reels.pdf al repo de GitHub y pegar la ruta acá">Descargar →</a>
       </div>
       <div class="free-card">
-        <span class="free-tag mono">GRATIS · PDF</span>
+        <span class="free-tag">GRATIS · PDF</span>
         <h3 class="free-title">Plantilla de brief creativo</h3>
-        <p class="free-desc">La misma que usamos antes de arrancar cualquier proyecto.</p>
-        <a href="#" class="free-link" data-pdf-link="TODO: subir plantilla-de-brief-creativo.pdf al repo de GitHub y pegar la ruta acá">Descargar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <p class="free-desc">La misma que uso antes de arrancar cualquier proyecto.</p>
+        <a href="#" class="free-link" data-pdf-link="TODO: subir plantilla-de-brief-creativo.pdf al repo de GitHub y pegar la ruta acá">Descargar →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SOBRE MÍ -->
-<section class="section about" id="sobre-mi" style="--track-color:var(--purple)">
+<section class="section about" id="sobre-mi">
   <div class="wrap">
-    <div class="section-head" style="margin-bottom:26px;">
-      <span class="track-label mono">SOBRE MÍ</span>
+    <div class="section-head">
+      <span class="label">Sobre mí</span>
       <h2 class="section-title">Hola, soy Ju</h2>
     </div>
     <div class="about-copy">
-      <p>Estudié diseño multimedial en la Universidad Nacional de las Artes, pero aprendí a editar y a crear contenido mucho antes de terminar la carrera — a fuerza de hacer, probar y corregir todos los días.</p>
-      <p>Hoy trabajo <strong>creando contenido para marcas</strong>: diseño piezas, edito videos y armo estrategias que después veo funcionar en cuentas reales. Todo lo que vendo acá salió de ese trabajo — no son cursos armados para vender, son los procesos que uso yo.</p>
+      <p>Estudié <span class="pop">diseño multimedial</span> en la Universidad Nacional de las Artes, pero aprendí a editar y a crear contenido mucho antes de terminar la carrera — a fuerza de hacer, probar y corregir todos los días.</p>
+      <p>Hoy trabajo <b>creando contenido para marcas</b>: diseño piezas, edito videos y armo <span class="pop">estrategias</span> que después veo funcionar en cuentas reales. Todo lo que vendo acá salió de ese trabajo — no son cursos armados para vender, son los procesos que uso yo.</p>
       <p>Si querés ver mi trabajo antes de decidirte, está todo en mis redes. Y si tenés dudas, más abajo respondo las que más me preguntan.</p>
       <div class="about-contact">
         <a href="mailto:juucontenido@gmail.com" class="mail-link">
@@ -719,10 +515,10 @@ footer{padding:90px 32px 40px;}
 </section>
 
 <!-- FAQ -->
-<section class="section faq" id="faq" style="--track-color:var(--purple)">
+<section class="section faq" id="faq">
   <div class="wrap">
     <div class="section-head">
-      <span class="track-label mono">ANTES DE COMPRAR</span>
+      <span class="label">Antes de comprar</span>
       <h2 class="section-title">Preguntas frecuentes</h2>
       <p class="section-desc">Lo que más me preguntan antes de sumarse a un curso o descargar un PDF. Si tenés otra duda, escribime por Instagram.</p>
     </div>
@@ -777,7 +573,7 @@ footer{padding:90px 32px 40px;}
     <div class="foot-top">
       <div>
         <h3 class="foot-title">Sumate a crear</h3>
-        <p style="color:var(--text-dim); font-size:14px; margin-bottom:22px; max-width:38ch;">Un mail al mes con recursos nuevos, ideas y algún que otro descuento. Nada de spam, te lo prometo.</p>
+        <p style="color:var(--gray); font-size:14px; margin-bottom:22px; max-width:38ch;">Un mail al mes con recursos nuevos, ideas y algún que otro descuento. Nada de spam, te lo prometo.</p>
         <form class="newsletter" onsubmit="return false;">
           <input type="email" placeholder="tu@mail.com" required>
           <button type="submit">Sumarme</button>
@@ -785,20 +581,20 @@ footer{padding:90px 32px 40px;}
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h4 class="mono">CATÁLOGO</h4>
+          <h4>Catálogo</h4>
           <a href="#diseno">Diseño</a>
           <a href="#video">Edición de video</a>
           <a href="#marketing">Marketing</a>
           <a href="#gratis">Gratis</a>
         </div>
         <div class="foot-col">
-          <h4 class="mono">JU.CONTENIDO</h4>
+          <h4>Ju.contenido</h4>
           <a href="#sobre-mi">Sobre mí</a>
           <a href="#faq">Preguntas frecuentes</a>
           <a href="#faq">Contacto</a>
         </div>
         <div class="foot-col">
-          <h4 class="mono">CONTACTO</h4>
+          <h4>Contacto</h4>
           <a href="mailto:juucontenido@gmail.com">juucontenido@gmail.com</a>
           <a href="https://www.instagram.com/ju.contenido/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.linkedin.com/in/jubascuas/" target="_blank" rel="noopener">LinkedIn</a>
@@ -816,36 +612,71 @@ footer{padding:90px 32px 40px;}
 </footer>
 
 <script>
-// ---- scroll reveal ----
 (function(){
-  const sections = document.querySelectorAll('.section');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in-view'); });
-  }, { threshold: 0.15 });
-  sections.forEach(s => io.observe(s));
-})();
+  const glow = document.getElementById('cursorGlow');
+  if(!glow || window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-// ---- drag to scroll card rows ----
+  // paleta en orden, para interpolar el color según la posición horizontal
+  const stops = ['#FF5FAE', '#D633E0', '#1EC8F2', '#00BC8C', '#FFCD3C', '#FF5FAE'];
+  function hexToRgb(hex){
+    const n = parseInt(hex.slice(1), 16);
+    return [(n>>16)&255, (n>>8)&255, n&255];
+  }
+  const rgbStops = stops.map(hexToRgb);
+  function lerpColor(t){
+    const segs = rgbStops.length - 1;
+    const pos = Math.min(0.999, Math.max(0, t)) * segs;
+    const i = Math.floor(pos);
+    const f = pos - i;
+    const a = rgbStops[i], b = rgbStops[i+1];
+    const r = Math.round(a[0] + (b[0]-a[0])*f);
+    const g = Math.round(a[1] + (b[1]-a[1])*f);
+    const bl = Math.round(a[2] + (b[2]-a[2])*f);
+    return `rgb(${r},${g},${bl})`;
+  }
+
+  let targetX = window.innerWidth/2, targetY = window.innerHeight/2;
+  let curX = targetX, curY = targetY;
+
+  window.addEventListener('pointermove', (e) => {
+    targetX = e.clientX; targetY = e.clientY;
+    glow.style.background = lerpColor(e.clientX / window.innerWidth);
+  });
+
+  function frame(){
+    curX += (targetX - curX) * 0.12;
+    curY += (targetY - curY) * 0.12;
+    glow.style.transform = `translate(${curX}px, ${curY}px)`;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
 (function(){
-  document.querySelectorAll('[data-row]').forEach(row => {
-    let isDown = false, startX, scrollLeft;
-    row.addEventListener('pointerdown', (e) => {
-      isDown = true; row.classList.add('dragging');
-      startX = e.pageX; scrollLeft = row.scrollLeft;
-    });
-    window.addEventListener('pointerup', () => { isDown = false; row.classList.remove('dragging'); });
-    row.addEventListener('pointerleave', () => { isDown = false; row.classList.remove('dragging'); });
-    row.addEventListener('pointermove', (e) => {
-      if(!isDown) return;
-      row.scrollLeft = scrollLeft - (e.pageX - startX);
-    });
+  const sections = document.querySelectorAll('.card, .free-card, .faq-item');
+  // subtle stagger-in on scroll for cards
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity=1; e.target.style.transform='none'; } });
+  }, { threshold: 0.1 });
+  sections.forEach(el => {
+    el.style.opacity = 0; el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    io.observe(el);
   });
 })();
-
-// ---- mobile menu (simple toggle placeholder) ----
+(function(){
+  document.querySelectorAll('[data-row]').forEach(row => {
+    let isDown=false, startX, scrollLeft;
+    row.addEventListener('pointerdown', e => { isDown=true; row.classList.add('dragging'); startX=e.pageX; scrollLeft=row.scrollLeft; });
+    window.addEventListener('pointerup', () => { isDown=false; row.classList.remove('dragging'); });
+    row.addEventListener('pointerleave', () => { isDown=false; row.classList.remove('dragging'); });
+    row.addEventListener('pointermove', e => { if(!isDown) return; row.scrollLeft = scrollLeft - (e.pageX - startX); });
+  });
+})();
 document.querySelector('.burger')?.addEventListener('click', () => {
-  document.querySelector('.nav-links').style.display =
-    document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex';
+  const nav = document.querySelector('.nav-links');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
 });
 </script>
 
