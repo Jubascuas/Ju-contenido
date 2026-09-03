@@ -54,7 +54,7 @@
 
   --radius:20px;
   --ease:cubic-bezier(.16,.84,.44,1);
-  --font-display:'High Cruise', 'Stretch Pro', 'Unbounded', 'Poppins', sans-serif;
+  --font-display:'Unbounded', 'Poppins', sans-serif;
   --font-body:'Poppins', sans-serif;
 }
 
@@ -73,7 +73,7 @@ body{background:var(--bg); color:var(--text); font-family:var(--font-body); over
 ::selection{background:var(--pink); color:var(--ink);}
 a{color:inherit; text-decoration:none;}
 button{font-family:inherit; cursor:pointer;}
-h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:-.005em;}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; letter-spacing:-.01em;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
 .label{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); font-weight:700;}
 .pop{display:inline-block; font-weight:700; transition:transform .25s var(--ease), color .25s var(--ease);}
@@ -99,12 +99,12 @@ h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:-.005e
 .burger span{width:22px; height:2px; background:var(--ink);}
 
 /* ============ MARQUEE ============ */
-.marquee-strip{background:var(--pink); color:var(--ink); overflow:hidden; white-space:nowrap;}
+.marquee-strip{background:var(--ink); color:var(--cream); overflow:hidden; white-space:nowrap;}
 .marquee-track{display:inline-flex; animation:scroll 22s linear infinite; font-weight:700; font-size:14px; padding:9px 0;}
 .marquee-track span{padding:0 24px; display:inline-flex; align-items:center; gap:10px;}
-.marquee-track span:nth-child(odd){color:#fff;}
-.marquee-track span:nth-child(even){color:var(--ink);}
-.marquee-track span::before{content:'●'; font-size:7px; color:var(--ink);}
+.marquee-track span:nth-child(odd){color:var(--pink);}
+.marquee-track span:nth-child(even){color:var(--yellow);}
+.marquee-track span::before{content:'●'; font-size:7px; color:var(--yellow);}
 @keyframes scroll{to{transform:translateX(-50%);}}
 @media (prefers-reduced-motion: reduce){.marquee-track{animation:none;}}
 
@@ -117,8 +117,19 @@ h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:-.005e
 .eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); font-weight:700; margin-bottom:22px;}
 .eyebrow .rec{width:7px; height:7px; border-radius:50%; background:var(--pink); animation:pulse 1.6s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-h1.hero-title{font-size:clamp(40px, 6.5vw, 84px); line-height:1.2; max-width:16ch; padding-top:.15em;}
+.hero-title-wrap{position:relative; display:inline-block;}
+h1.hero-title{font-size:clamp(48px, 8vw, 96px); line-height:.92; max-width:17ch; padding-top:.15em; position:relative;}
 h1.hero-title .accent{color:var(--pink);}
+.sparkle{position:absolute; pointer-events:none; animation:twinkle 2.4s ease-in-out infinite;}
+.sparkle svg{width:100%; height:100%;}
+.sp1{top:2%; left:2%; width:26px; height:26px; color:var(--blue); animation-delay:0s;}
+.sp2{top:8%; right:4%; width:20px; height:20px; color:var(--yellow); animation-delay:.5s;}
+.sp3{top:48%; left:-2%; width:22px; height:22px; color:var(--teal); animation-delay:1s;}
+.sp4{bottom:6%; right:10%; width:30px; height:30px; color:var(--purple); animation-delay:1.5s;}
+.sp5{bottom:-2%; left:36%; width:18px; height:18px; color:var(--pink); animation-delay:.8s;}
+@keyframes twinkle{0%,100%{opacity:.25; transform:scale(.75) rotate(0deg);}50%{opacity:1; transform:scale(1.15) rotate(12deg);}}
+@media (prefers-reduced-motion: reduce){.sparkle{animation:none; opacity:.8;}}
+@media (max-width:600px){.sparkle{display:none;}}
 .hero-sub{margin-top:24px; max-width:560px; font-size:17px; color:var(--gray); line-height:1.6;}
 .hero-ctas{margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
 .btn-lg{padding:15px 30px; font-size:14.5px; border-width:2px;}
@@ -129,6 +140,23 @@ h1.hero-title .accent{color:var(--pink);}
 
 /* ============ SECTIONS ============ */
 .section{padding:100px 32px;}
+
+/* ============ POR QUÉ (compacta) ============ */
+.why-section{padding:20px 32px 60px;}
+.why-title{font-size:clamp(20px,2.4vw,26px); text-align:center; margin-bottom:24px; color:var(--gray); font-weight:600;}
+.why-row{display:flex; gap:16px; overflow-x:auto; padding:6px 6px 10px; scroll-snap-type:x proximity; cursor:grab; scrollbar-width:none;}
+@media (min-width:900px){.why-row{justify-content:center;}}
+.why-row::-webkit-scrollbar{display:none;}
+.why-row.dragging{cursor:grabbing; scroll-snap-type:none;}
+.why-card{flex:0 0 240px; scroll-snap-align:start; border-radius:20px; padding:20px 22px; color:#fff; min-height:150px; display:flex; flex-direction:column; transition:transform .25s var(--ease);}
+.why-card:hover{transform:translateY(-4px);}
+.why-card .num{font-family:var(--font-display); font-weight:800; font-size:11px; opacity:.85;}
+.why-card h3{font-size:14.5px; margin:10px 0 6px; color:#fff; letter-spacing:0;}
+.why-card p{font-size:12px; line-height:1.45; opacity:.95; margin:0;}
+.why-card.wc1{background:var(--pink);}
+.why-card.wc2{background:var(--blue);}
+.why-card.wc3{background:var(--teal);}
+.why-card.wc4{background:var(--purple);}
 .section-head{margin-bottom:48px;}
 .section-title{font-size:clamp(32px, 4.5vw, 52px); margin-top:8px;}
 .section-desc{max-width:560px; color:var(--gray); font-size:16px; margin-top:10px;}
@@ -199,8 +227,11 @@ h1.hero-title .accent{color:var(--pink);}
 .faq-answer{padding:0 24px 22px; font-size:14.5px; color:var(--gray); max-width:64ch; line-height:1.6;}
 
 /* ============ FOOTER ============ */
-footer{padding:90px 32px 40px; border-top:2px solid var(--ink);}
+footer{padding:70px 32px 40px;}
 .foot-top{display:grid; grid-template-columns:1.3fr 1fr; gap:60px; padding-bottom:60px; border-bottom:2px solid var(--ink);}
+.closing-band{background:var(--pink); border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); padding:64px 32px; text-align:center;}
+.closing-band h2{font-size:clamp(30px,5vw,54px); color:var(--ink); line-height:1.1;}
+.closing-band .spark{display:inline-block; color:#fff;}
 .foot-title{font-size:clamp(34px,5vw,54px); color:var(--pink); line-height:.98; margin-bottom:20px;}
 .newsletter{display:flex; gap:0; max-width:420px; border:2.5px solid var(--ink); border-radius:100px; padding:5px 5px 5px 20px;}
 .newsletter input{flex:1; background:none; border:none; outline:none; color:var(--ink); font-family:var(--font-body); font-size:14px;}
@@ -262,11 +293,31 @@ footer{padding:90px 32px 40px; border-top:2px solid var(--ink);}
 <section class="hero">
   <div class="hero-inner">
     <span class="eyebrow"><span class="rec"></span>Grabando — recursos para crear todos los días</span>
-    <h1 class="hero-title">DISEÑÁ, EDITÁ<br>Y CONTÁ TU <span class="accent">HISTORIA</span></h1>
+    <div class="hero-title-wrap">
+      <span class="sparkle sp1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.2 9.8L24 12L14.2 14.2L12 24L9.8 14.2L0 12L9.8 9.8Z"/></svg></span>
+      <span class="sparkle sp2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.2 9.8L24 12L14.2 14.2L12 24L9.8 14.2L0 12L9.8 9.8Z"/></svg></span>
+      <span class="sparkle sp3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.2 9.8L24 12L14.2 14.2L12 24L9.8 14.2L0 12L9.8 9.8Z"/></svg></span>
+      <span class="sparkle sp4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.2 9.8L24 12L14.2 14.2L12 24L9.8 14.2L0 12L9.8 9.8Z"/></svg></span>
+      <span class="sparkle sp5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.2 9.8L24 12L14.2 14.2L12 24L9.8 14.2L0 12L9.8 9.8Z"/></svg></span>
+      <h1 class="hero-title">DISEÑÁ, EDITÁ<br>Y CONTÁ TU <span class="accent">HISTORIA</span></h1>
+    </div>
     <p class="hero-sub">Soy Ju, diseñadora gráfica y creadora de contenido. Lo que vas a encontrar acá lo armé con lo que uso en mi trabajo real, todos los días — no es teoría suelta, es lo que a mí me sirvió para crecer.</p>
     <div class="hero-ctas">
       <a href="#diseno" class="btn btn-solid btn-lg btn-glow">Recursos premium</a>
       <a href="#gratis" class="btn btn-lg btn-glow">Recursos gratuitos</a>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section class="why-section">
+  <div class="wrap">
+    <h2 class="why-title">Por qué vale la pena</h2>
+    <div class="why-row" data-row>
+      <div class="why-card wc1"><span class="num">01</span><h3>Contenido real, no relleno</h3><p>Cada curso sale de un proyecto que hice de verdad, con clientes reales.</p></div>
+      <div class="why-card wc2"><span class="num">02</span><h3>A tu ritmo</h3><p>Grabado, sin horarios. Lo ves cuando podés, las veces que necesites.</p></div>
+      <div class="why-card wc3"><span class="num">03</span><h3>Diseño, video y estrategia</h3><p>Tres áreas que se complementan entre sí, no compartimentos separados.</p></div>
+      <div class="why-card wc4"><span class="num">04</span><h3>Acceso de por vida</h3><p>Comprás una vez y volvés cuando quieras, sin vencimiento.</p></div>
     </div>
   </div>
 </section>
@@ -483,7 +534,7 @@ footer{padding:90px 32px 40px; border-top:2px solid var(--ink);}
         <span class="free-tag">GRATIS · PDF</span>
         <h3 class="free-title">Plantilla de brief creativo</h3>
         <p class="free-desc">La misma que uso antes de arrancar cualquier proyecto.</p>
-        <a href="#" class="free-link" data-pdf-link="TODO: subir plantilla-de-brief-creativo.pdf al repo de GitHub y pegar la ruta acá">Descargar →</a>
+        <a href="https://drive.google.com/uc?export=download&id=1m6aGt0pHBClzwGSip2EG8hizKcpYpGS1" class="free-link" target="_blank" rel="noopener">Descargar →</a>
       </div>
     </div>
   </div>
@@ -567,12 +618,16 @@ footer{padding:90px 32px 40px; border-top:2px solid var(--ink);}
   </div>
 </section>
 
+<!-- CIERRE -->
+<div class="closing-band">
+  <div class="wrap"><h2>Sumate a crear algo tuyo <span class="spark">✦</span></h2></div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
     <div class="foot-top">
       <div>
-        <h3 class="foot-title">Sumate a crear</h3>
         <p style="color:var(--gray); font-size:14px; margin-bottom:22px; max-width:38ch;">Un mail al mes con recursos nuevos, ideas y algún que otro descuento. Nada de spam, te lo prometo.</p>
         <form class="newsletter" onsubmit="return false;">
           <input type="email" placeholder="tu@mail.com" required>
