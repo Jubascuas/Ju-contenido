@@ -8,8 +8,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ju.contenido — Realización audiovisual">
 <meta property="og:description" content="Dirección, cámara, fotografía y edición para marcas y productoras. Además, recursos para que vos también crees.">
-<meta property="og:image" content="https://jubascuas.github.io/Ju-contenido-portfolio/assets/hero.jpg">
-<meta property="og:url" content="https://jubascuas.github.io/Ju-contenido-portfolio/">
+<meta property="og:image" content="https://jubascuas.github.io/Ju-contenido/assets/hero.jpg">
+<meta property="og:url" content="https://jubascuas.github.io/Ju-contenido/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF5FAE' d='M12 0C12.9 7.6 16.4 11.1 24 12 16.4 12.9 12.9 16.4 12 24 11.1 16.4 7.6 12.9 0 12 7.6 11.1 11.1 7.6 12 0Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@ em,.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing
 
 /* ---------- hero (visor de cámara) ---------- */
 .hero{position:relative;height:100svh;min-height:600px;display:grid;place-items:center;overflow:hidden;isolation:isolate}
-.hero-photo{position:absolute;inset:0;background:url(https://jubascuas.github.io/Ju-contenido-portfolio/assets/hero.jpg) center 35%/cover;z-index:-2;
+.hero-photo{position:absolute;inset:0;background:url(assets/hero.jpg) center 35%/cover;z-index:-2;
   filter:saturate(1.05);transform:scale(1.06);animation:slowzoom 18s ease-out forwards}
 @keyframes slowzoom{to{transform:scale(1)}}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(28,27,31,.55) 0%,rgba(28,27,31,.25) 35%,rgba(28,27,31,.35) 60%,rgba(28,27,31,.85) 100%)}
@@ -124,7 +124,8 @@ em,.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing
 /* ---------- dos caminos ---------- */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:60px}
 @media (max-width:820px){.split{grid-template-columns:1fr}}
-.path{display:block;perspective:1200px}
+.path{display:flex;flex-direction:column;perspective:1200px}
+.path .path-foot{order:-1;margin:0 0 20px;align-items:center}
 .path-card{border-radius:26px;overflow:hidden;aspect-ratio:1.25;position:relative;transform-style:preserve-3d;transition:transform .5s var(--ease);background:var(--ink2)}
 .collage{position:absolute;inset:0;display:grid;gap:6px;padding:6px;transition:transform .9s var(--ease)}
 .path:hover .collage{transform:scale(1.05)}
@@ -437,11 +438,11 @@ em{font-weight:700;letter-spacing:-.03em}
       <a href="#trabajos" class="path rv d1" data-cursor="ver">
         <div class="path-card tilt">
           <div class="collage c-a">
-            <div><img src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/foto/16-mercedesbenz-desfile.jpg" alt=""></div>
-            <div><img src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/foto/13-mercedesbenz-entrevista.jpg" alt=""></div>
-            <div><img src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/foto/02-luzutv-resumido-microfono.jpg" alt=""></div>
-            <div><img src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/foto/05-luzutv-resumido-playa.jpg" alt=""></div>
-            <div><img src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/foto/10-mercedesbenz-modelo1.jpg" alt=""></div>
+            <div><img src="assets/foto/16-mercedesbenz-desfile.jpg" alt=""></div>
+            <div><img src="assets/foto/13-mercedesbenz-entrevista.jpg" alt=""></div>
+            <div><img src="assets/foto/02-luzutv-resumido-microfono.jpg" alt=""></div>
+            <div><img src="assets/foto/05-luzutv-resumido-playa.jpg" alt=""></div>
+            <div><img src="assets/foto/10-mercedesbenz-modelo1.jpg" alt=""></div>
           </div>
         </div>
         <div class="path-foot">
@@ -521,7 +522,7 @@ em{font-weight:700;letter-spacing:-.03em}
   <div class="wrap about-g">
     <div class="portrait-w rv">
       <div class="portrait">
-        <img id="par" src="https://jubascuas.github.io/Ju-contenido-portfolio/assets/hero.jpg" alt="Julieta Bascuas">
+        <img id="par" src="assets/hero.jpg" alt="Julieta Bascuas">
         <div class="cap"><span>Julieta Bascuas</span><span>Buenos Aires</span></div>
       </div>
       <div class="slate" id="slate" aria-hidden="true">
@@ -602,7 +603,7 @@ em{font-weight:700;letter-spacing:-.03em}
 <div class="lb" id="lb"><button class="lb-x" id="lbx" aria-label="Cerrar">✕</button><div class="lb-box" id="lbb"></div></div>
 
 <script>
-const A='https://jubascuas.github.io/Ju-contenido-portfolio/assets/';
+const A='assets/';
 const works=[
   {cat:'cortos',t:'Ni Una Menos',c:'Corto documental',yt:'WWupUhQKen8',f:'h'},
   {cat:'edicion',t:'Buongiorno',c:'Edición · reel',v:'edicion/buongiorno-presentacion.mp4',f:'v'},
