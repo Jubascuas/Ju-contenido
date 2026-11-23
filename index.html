@@ -345,6 +345,7 @@ em,.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing
 .news-small{font-size:12px;margin-top:12px;opacity:.7}
 .news-star{position:absolute;width:120px;right:-20px;top:-20px;opacity:.25;fill:var(--ink);animation:spin2 20s linear infinite}
 @keyframes spin2{to{transform:rotate(360deg)}}
+.dl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.dl a{font:600 13px var(--sans);padding:9px 14px;border-radius:999px;background:var(--ink);color:var(--cream);white-space:nowrap}.dl a:hover{background:#000}
 /* pop-up newsletter */
 .pop{position:fixed;right:22px;bottom:22px;z-index:80;width:min(380px,calc(100% - 32px));background:var(--cream);color:var(--ink);border-radius:24px;padding:28px 26px 24px;
   box-shadow:0 30px 70px rgba(0,0,0,.5);transform:translateY(130%) rotate(3deg);opacity:0;transition:transform .7s var(--ease),opacity .5s;overflow:hidden}
@@ -560,7 +561,7 @@ em{font-weight:700;letter-spacing:-.03em}
           <input id="newsmail" type="email" required placeholder="tu@mail.com" autocomplete="email">
           <button type="submit" class="mag">Sumarme</button>
         </form>
-        <p class="news-ok">¡Listo! Ya estás adentro ✦ Revisá tu mail para confirmar.</p>
+        <p class="news-ok">¡Listo! Ya estás adentro ✦ Acá tenés tus 3 recursos gratis (también te los mandamos por mail):<span class="dl"><a href="https://drive.google.com/uc?export=download&id=10rN-4QrhIFpSHDPyF9KMLY6mFCKWoTXB" target="_blank" rel="noopener">Lo básico del diseño ↓</a><a href="https://drive.google.com/uc?export=download&id=1wD9Xq_Elw0N4bHzG2FCdHoRgCjnJ1B8Z" target="_blank" rel="noopener">10 hooks para reels ↓</a><a href="https://drive.google.com/uc?export=download&id=1m6aGt0pHBClzwGSip2EG8hizKcpYpGS1" target="_blank" rel="noopener">Brief creativo ↓</a></span></p>
         <p class="form-err"></p>
         <p class="news-small">Podés darte de baja cuando quieras.</p>
       </div>
@@ -579,7 +580,7 @@ em{font-weight:700;letter-spacing:-.03em}
     <input id="popmail" type="email" required placeholder="tu@mail.com" autocomplete="email">
     <button type="submit">Quiero ✦</button>
   </form>
-  <p class="news-ok">¡Listo! Revisá tu mail para confirmar ✦</p>
+  <p class="news-ok">¡Listo! Ya estás adentro ✦ Descargá tus regalos:<span class="dl"><a href="https://drive.google.com/uc?export=download&id=10rN-4QrhIFpSHDPyF9KMLY6mFCKWoTXB" target="_blank" rel="noopener">Lo básico del diseño ↓</a><a href="https://drive.google.com/uc?export=download&id=1wD9Xq_Elw0N4bHzG2FCdHoRgCjnJ1B8Z" target="_blank" rel="noopener">10 hooks para reels ↓</a><a href="https://drive.google.com/uc?export=download&id=1m6aGt0pHBClzwGSip2EG8hizKcpYpGS1" target="_blank" rel="noopener">Brief creativo ↓</a></span></p>
   <p class="form-err"></p>
 </aside>
 
@@ -719,7 +720,7 @@ const areas=[
     ['Curso','De cero a tu primera pieza profesional','Fundamentos, composición, color y tipografía aplicados a proyectos reales.','<s>$95.000</s>$69.000'],
     ['Curso','Illustrator + Photoshop: mi flujo real','De boceto a pieza terminada, con los mismos atajos y capas que uso yo.','$34.000'],
     ['PDF','Guía de tipografía aplicada','Cómo elegir y combinar fuentes sin depender del ojo de otra persona.','$6.500'],
-    ['Templates','Pack de templates Canva Pro','40 plantillas editables para redes, presentaciones y portfolio.','$8.000','https://mpago.la/18VZk6K']]},
+    ['Templates','Pack de templates Canva Pro','40 plantillas editables para redes, presentaciones y portfolio.','$50.000','https://mpago.la/18VZk6K']]},
   {i:'A1',h:'Marketing &amp; <em>estrategia</em>',c:'var(--yellow)',s:'<b>4 recursos</b>próximamente',items:[
     ['Curso','Estrategia de contenido 360°','Un sistema completo para planificar, crear y medir sin improvisar.','$28.000'],
     ['PDF','Copywriting que vende','Estructuras probadas para escribir textos que llevan a la acción.','$7.000'],
@@ -785,7 +786,7 @@ function wire(form,box){
       const d=await subscribe(form.querySelector('input').value.trim());
       if(d.result==='success'||/already subscribed/i.test(d.msg||'')){
         box.classList.add('done'); subscribed=true; try{localStorage.setItem('ju_news','1')}catch(e){}
-        if(box.id==='pop') setTimeout(closePop,2600);
+        
       } else { err.textContent='Revisá que el mail esté bien escrito e intentá de nuevo.'; err.classList.add('on'); }
     }catch(_){ err.textContent='No se pudo conectar. Probá de nuevo en un ratito.'; err.classList.add('on'); }
     btn.textContent=txt; btn.disabled=false;
