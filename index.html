@@ -663,6 +663,15 @@ function closeLB(){lb.classList.remove('on');setTimeout(()=>lbb.innerHTML='',400
 document.getElementById('lbx').onclick=closeLB; lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeLB()});
 
+/* links internos: bajan a la sección sin agregar #seccion a la dirección */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const id=a.getAttribute('href').slice(1); e.preventDefault();
+  const t=id&&id!=='top'?document.getElementById(id):null;
+  scrollTo({top:t?t.getBoundingClientRect().top+scrollY:0,behavior:'smooth'});
+});
+if(location.hash){const t=document.getElementById(location.hash.slice(1));history.replaceState(null,'',location.pathname+location.search);if(t)addEventListener('load',()=>t.scrollIntoView())}
+
 /* split de letras del hero */
 let d=.15;
 document.querySelectorAll('[data-split]').forEach(n=>{
