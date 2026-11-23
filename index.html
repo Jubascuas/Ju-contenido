@@ -769,26 +769,43 @@ function subscribe(email){
   if(!MC_URL) return new Promise(r=>setTimeout(()=>r({result:'success'}),500));
   return new Promise((res,rej)=>{
     const cb='mc'+Date.now(),s=document.createElement('script');
-    window[cb]=d=>{res(d);delete window[cb];s.remove()};
-    s.onerror=()=>{rej();s.remove()};
+    const tm=setTimeout(()=>{window[cb]=()=>{};s.remove();rej('timeout')},9000); // nunca queda trabado
+    window[cb]=d=>{clearTimeout(tm);res(d);delete window[cb];s.remove()};
+    s.onerror=()=>{clearTimeout(tm);rej('net');s.remove()};
     s.src=MC_URL.replace('/post?','/post-json?')+'&EMAIL='+encodeURIComponent(email)+'&'+MC_HONEYPOT+'=&c='+cb;
     document.body.appendChild(s);
   });
 }
+/* si Mailchimp pide un paso extra (p. ej. un mail que se había borrado de la lista), se termina en su página */
+function mcHosted(email){
+  const f=document.createElement('form'); f.method='post'; f.action=MC_URL; f.target='_blank'; f.style.display='none';
+  f.innerHTML='<input name="EMAIL"><input name="'+MC_HONEYPOT+'" value="">'; f.querySelector('[name=EMAIL]').value=email;
+  document.body.appendChild(f); f.submit(); f.remove();
+}
 let subscribed=false;
 try{subscribed=localStorage.getItem('ju_news')==='1'}catch(e){}
 function wire(form,box){
-  const err=box.querySelector('.form-err');
+  const err=box.querySelector('.form-err'), ok=box.querySelector('.news-ok');
+  const done=()=>{box.classList.add('done'); subscribed=true; try{localStorage.setItem('ju_news','1')}catch(e){}};
   form.addEventListener('submit',async e=>{
     e.preventDefault(); err.classList.remove('on');
+    const email=form.querySelector('input').value.trim();
     const btn=form.querySelector('button'),txt=btn.textContent; btn.textContent='…'; btn.disabled=true;
-    try{
-      const d=await subscribe(form.querySelector('input').value.trim());
-      if(d.result==='success'||/already subscribed/i.test(d.msg||'')){
-        box.classList.add('done'); subscribed=true; try{localStorage.setItem('ju_news','1')}catch(e){}
-        
-      } else { err.textContent='Revisá que el mail esté bien escrito e intentá de nuevo.'; err.classList.add('on'); }
-    }catch(_){ err.textContent='No se pudo conectar. Probá de nuevo en un ratito.'; err.classList.add('on'); }
+    let d=null; try{ d=await subscribe(email); }catch(_){}
+    const msg=(d&&d.msg)||'';
+    if(d&&d.result==='success'){ done(); }
+    else if(/suscrit|subscribed/i.test(msg)){ done(); }
+    else if(d&&/v[aá]lid|falsa|fake|dominio|domain|@/i.test(msg)){ err.textContent='Revisá que el mail esté bien escrito e intentá de nuevo.'; err.classList.add('on'); }
+    else {
+      // cualquier otro caso (pide verificación extra, sin respuesta, etc.): igual le damos los regalos y le ofrecemos terminar en Mailchimp
+      done();
+      if(!ok.querySelector('.mc-fin')){
+        const p=document.createElement('span'); p.className='mc-fin';
+        p.innerHTML='<br><br>Para recibirlos también por mail, <a href="#" style="text-decoration:underline">confirmá tu suscripción acá →</a>';
+        p.querySelector('a').addEventListener('click',ev=>{ev.preventDefault();mcHosted(email)});
+        ok.appendChild(p);
+      }
+    }
     btn.textContent=txt; btn.disabled=false;
   });
 }
